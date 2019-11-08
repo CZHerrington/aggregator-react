@@ -303,7 +303,7 @@ async function updateAllCards() {
 	// let musicArray = await updateTrendMusicData();
 	let movieArray = await updateMovieData();
 	let tvArray = await updateTVData();
-	// let nfBookArray = await updateNonfictionBookData();
+	let nfBookArray = await updateNonfictionBookData();
 	let fBookArray = await updateFictionBookData();
 	let dzMusicArray = await updateDeezerData();
 	let newsArray = await updateNewsData();
@@ -312,7 +312,7 @@ async function updateAllCards() {
 	cardArray = cardArray.concat(
 		await movieArray,
 		await tvArray,
-		// await nfBookArray,
+		await nfBookArray,
 		await fBookArray,
 		await dzMusicArray,
 		await newsArray,
