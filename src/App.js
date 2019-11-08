@@ -1,32 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import FullPageBg from './components/FullPageBg';
+import LoadingAnim from './components/LoadingAnim';
+import NavBar from './components/NavBar';
+import SettingsOverlay from './components/SettingsOverlay';
+import CardContainer from './components/CardContainer';
+// import './App.css';
+import './index.css';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fullArray: [],
-			filteredArray: []
+			settingsActivated: false,
+			displayLoadingAnim: true
+			// fullArray: [],
+			// filteredArray: []
 		};
 	}
 
+	toggleSettings = () => {
+		this.setState({ settingsActivated: !this.state.settingsActivated });
+	};
+
+	cardsFinishedLoading = () => {
+		this.setState({ displayLoadingAnim: !this.state.displayLoadingAnim });
+	};
+
 	render() {
+		let activated = this.state.settingsActivated;
+
 		return (
 			<div className='App'>
-				<header className='App-header'>
-					<img src={logo} className='App-logo' alt='logo' />
-					<p>
-						Edit <code>src/App.js</code> and save to reload.
-					</p>
-					<a
-						className='App-link'
-						href='https://reactjs.org'
-						target='_blank'
-						rel='noopener noreferrer'>
-						Learn React
-					</a>
-				</header>
+				<FullPageBg />
+				<LoadingAnim display={this.state.displayLoadingAnim} />
+				<NavBar
+					settingsActivated={activated}
+					toggleSettings={this.toggleSettings}
+				/>
+				<SettingsOverlay settingsActivated={activated} />
+				<CardContainer
+					settingsActivated={activated}
+					cardsFinishedLoading={this.cardsFinishedLoading}
+				/>
 			</div>
 		);
 	}
