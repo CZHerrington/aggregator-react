@@ -1,6 +1,7 @@
 // * * * * * * * * * * * * *
 // * * * * API SECTION * * *
 // * * * * * * * * * * * * *
+import _ from 'lodash';
 
 // Lists used to match the top movie/show with its genre
 const movieGenre = {
@@ -43,139 +44,62 @@ const tvGenre = {
 	37: 'Western'
 };
 
-//  template html
-const musicCardTemplate = `
-    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" data-subcategory="<%= subcategory %>" class="small-card music-card">
-        <img class="album-art" src="<%= art %>">
-        <div class="song-info">
-            <a href=<%= url %> target="_blank" class="titleLinks">
-                <h2><%= track %></h2>
-            </a>
-            <h3><%= artist %></h3>
-            <h3><i><%= album %></i></h3>
-        </div>
-        <div class="upvoteDownvote">
-            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
-        </div>
-    </div>`;
-// create a new template function with your html for music
-const musicTemplateFn = _.template(musicCardTemplate);
-
-//  template html
-// NOTE: WHICH OF THESE data tags should have genre?
-const movieCardTemplate = `
-    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" data-subcategory="<%= subcategory %>" data-url="<%= url %>" class="small-card music-card">
-        <img class="album-art" src="<%= art %>">
-        <div class="song-info">
-            <a href=<%= url %> target="_blank" class="titleLinks">
-                <h2><%= title %></h2>
-            </a>
-            <h3>Rating: <%= rating %></h3>
-            <h3><i><%= genre %> Movie</i></h3>
-        </div>
-        <div class="upvoteDownvote">
-            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
-        </div>
-    </div>`;
-// create a new template function with your html for movies
-const movieTemplateFn = _.template(movieCardTemplate);
-
-//  template html
-const tvCardTemplate = `
-    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" data-subcategory="<%= subcategory %>" class="small-card music-card">
-        <img class="album-art" src="<%= art %>">
-        <div class="song-info">
-            <a href=<%= url %> target="_blank" class="titleLinks">
-                <h2><%= title %></h2>
-            </a>
-            <h3>Rating: <%= rating %></h3>
-            <h3><i><%= genre %> Show</i></h3>
-        </div>
-        <div class="upvoteDownvote">
-            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
-        </div>
-    </div>`;
-// create a new template function with your html for movies
-const tvTemplateFn = _.template(tvCardTemplate);
-
-//  template html
-const bookCardTemplate = `
-    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" data-subcategory="<%= subcategory %>" class="small-card music-card">
-        <img class="album-art" src="<%= art %>">
-        <div class="song-info">
-            <a href=<%= url %> target="_blank" class="titleLinks">
-                <h2><%= title %></h2>
-            </a>
-            <h3><%= rank %></h3>
-            <h3><i><%= author %></i></h3>
-        </div>
-        <div class="upvoteDownvote">
-            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
-        </div>
-    </div>`;
-// create a new template function with your html for books
-const bookTemplateFn = _.template(bookCardTemplate);
-
-//  template html
-const newsCardTemplate = `
-    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" data-subcategory="<%= subcategory %>" class="small-card music-card">
-        <img class="album-art" src="<%= art %>">
-        <div class="song-info">
-            <a href="<%= id %>" target="_blank" class="titleLinks">
-                <h2 class="newsTitle"><%= section %>: &nbsp;<%= title %></h2>
-            </a>
-        </div>
-        <div class="upvoteDownvote">
-            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
-        </div>
-    </div>`;
-// create a new template function with your html for books
-const newsTemplateFn = _.template(newsCardTemplate);
-
-//  template html
-const gamingCardTemplate = `
-    <div data-index="<%= id %>" data-key="<%= key %>" data-category="<%= category %>" data-subcategory="<%= subcategory %>" class="small-card music-card">
-        <img class="album-art" src="<%= art %>">
-        <div class="song-info">
-            <a href="<%= url %>" target="_blank" class="titleLinks">
-                <h2 class="newsTitle"><%= publisher %>: &nbsp;<%= title %></h2>
-            </a>
-        </div>
-        <div class="upvoteDownvote">
-            <svg width="24" height="24" class="voteButton voteDown" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm0 10.293l5.293-5.293.707.707-5.293 5.293 5.293 5.293-.707.707-5.293-5.293-5.293 5.293-.707-.707 5.293-5.293-5.293-5.293.707-.707 5.293 5.293z"/></svg>
-        </div>
-    </div>`;
-// create a new template function with your html for books
-const gamingTemplateFn = _.template(gamingCardTemplate);
-
 // GETTER FUNCTIONS
+
+// The card object used in the arrays
+class cardObject {
+	constructor(
+		id,
+		key,
+		category,
+		subcategory,
+		artURL,
+		destURL,
+		title,
+		subtitle1,
+		subtitle2
+	) {
+		this.id = id;
+		this.key = key;
+		this.category = category;
+		this.subcategory = subcategory;
+		this.artURL = artURL;
+		this.destURL = destURL;
+		this.title = title;
+		this.subtitle1 = subtitle1 || null;
+		this.subtitle2 = subtitle2 || null;
+	}
+}
+
+// Extracts 'data' from fetch response
+const loadData = async url => {
+	const response = await fetch(url);
+	const data = await response.json();
+	return data;
+};
 
 // Returns an array of HTML templates of the top movies
 function updateMovieData() {
-	return get(
+	return loadData(
 		`https://api.themoviedb.org/3/trending/movie/week?api_key=8895918e5c66d703e2331fdd92606203`
 	).then(responseMovies => {
 		let resultsArray = [];
 		responseMovies.results.forEach(item => {
 			let movieSearch = encodeURIComponent(item.title);
-			// Generate HTML template
-			let html = movieTemplateFn({
-				id: item.id,
-				url: `https://www.google.com/search?q=${movieSearch}+trailer+youtube&btnI`,
-				title: item.title,
-				genre: movieGenre[item.genre_ids[0]],
-				rating: item.vote_average,
-				art: 'https://image.tmdb.org/t/p/w200' + item.poster_path,
-				key: item.title,
-				category: 'movies',
-				subcategory: movieGenre[item.genre_ids[0]]
-			});
 
-			// item.vote_average will return the average rating of the show/movie
-			// item.release_date will return the release date
-			// Maybe use this instead of release date?
+			let movieObject = new cardObject(
+				item.id, // id
+				item.title, //key
+				'movies', // category
+				movieGenre[item.genre_ids[0]], // subcategory
+				'https://image.tmdb.org/t/p/w200' + item.poster_path, // artURL
+				`https://www.google.com/search?q=${movieSearch}+trailer+youtube&btnI`, // destURL
+				item.title, // title
+				'Rating: ' + item.vote_average, // subtitle1
+				movieGenre[item.genre_ids[0]] + ' Movie' // subtitle2
+			);
 
-			resultsArray.push(html);
+			resultsArray.push(movieObject);
 		});
 
 		return resultsArray;
@@ -184,7 +108,7 @@ function updateMovieData() {
 
 // Returns an array of HTML templates of the top tv shows
 function updateTVData() {
-	return get(
+	return loadData(
 		`https://api.themoviedb.org/3/trending/tv/week?api_key=8895918e5c66d703e2331fdd92606203`
 	).then(responseTV => {
 		let resultsArray = [];
@@ -192,23 +116,19 @@ function updateTVData() {
 			// Create the Google 'Lucky' search query components
 			let tvSearch = encodeURIComponent(item.name);
 
-			// Generate HTML template
-			let html = tvTemplateFn({
-				id: item.id,
-				title: item.name,
-				url: `https://www.google.com/search?q=${tvSearch}+show+trailer+youtube&btnI`,
-				genre: tvGenre[item.genre_ids[0]],
-				rating: item.vote_average,
-				art: 'https://image.tmdb.org/t/p/w200' + item.poster_path,
-				key: item.name,
-				category: 'tv',
-				subcategory: tvGenre[item.genre_ids[0]]
-			});
-			// item.vote_average will return the average rating of the show/movie
-			// item.first_air_date will return the average rating of the show/movie
-			// Maybe use this instead of release date?
+			let tvObject = new cardObject(
+				item.id, // id
+				item.name, //key
+				'tv', // category
+				tvGenre[item.genre_ids[0]], // subcategory
+				'https://image.tmdb.org/t/p/w200' + item.poster_path, // artURL
+				`https://www.google.com/search?q=${tvSearch}+show+trailer+youtube&btnI`, // destURL
+				item.name, // title
+				'Rating: ' + item.vote_average, // subtitle1
+				tvGenre[item.genre_ids[0]] + ' Show' // subtitle2
+			);
 
-			resultsArray.push(html);
+			resultsArray.push(tvObject);
 		});
 
 		return resultsArray;
@@ -217,7 +137,7 @@ function updateTVData() {
 
 // Returns an array of HTML templates of top fiction books
 function updateFictionBookData() {
-	return get(
+	return loadData(
 		`https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=HfHxWUxYzqeXzAYx2V26or4nU9mOnw8n`
 	).then(responseBooks => {
 		let resultsArray = [];
@@ -227,18 +147,19 @@ function updateFictionBookData() {
 				item.author + ' ' + _.startCase(_.toLower(item.title))
 			);
 
-			let html = bookTemplateFn({
-				id: item.primary_isbn10,
-				url: `https://www.google.com/search?q=${bookSearch}+goodreads&btnI`,
-				rank: 'NYT Fiction Rank: ' + item.rank,
-				title: _.startCase(_.toLower(item.title)),
-				author: item.author,
-				art: item.book_image,
-				key: item.title,
-				category: 'books',
-				subcategory: 'Fiction'
-			});
-			resultsArray.push(html);
+			let fictionBookObject = new cardObject(
+				item.primary_isbn10, // id
+				item.title, // key
+				'books', // category
+				'Fiction', // subcategory
+				item.book_image, // artURL
+				`https://www.google.com/search?q=${bookSearch}+goodreads&btnI`, // destURL
+				_.startCase(_.toLower(item.title)), // title
+				'NYT Fiction Rank: ' + item.rank, // subtitle1
+				item.author // subtitle2
+			);
+
+			resultsArray.push(fictionBookObject);
 		});
 
 		return resultsArray;
@@ -247,7 +168,7 @@ function updateFictionBookData() {
 
 // Returns an array of HTML templates of top nonfiction books
 function updateNonfictionBookData() {
-	return get(
+	return loadData(
 		`https://api.nytimes.com/svc/books/v3/lists/current/hardcover-nonfiction.json?api-key=HfHxWUxYzqeXzAYx2V26or4nU9mOnw8n`
 	).then(responseBooks => {
 		let resultsArray = [];
@@ -257,19 +178,19 @@ function updateNonfictionBookData() {
 				item.author + ' ' + _.startCase(_.toLower(item.title))
 			);
 
-			let html = bookTemplateFn({
-				id: item.primary_isbn10,
-				url: `https://www.google.com/search?q=${bookSearch}+goodreads&btnI`,
-				rank: 'NYT Nonfiction Rank: ' + item.rank,
-				title: _.startCase(_.toLower(item.title)),
-				author: item.author,
-				art: item.book_image,
-				key: item.title,
-				category: 'books',
-				subcategory: 'Nonfiction'
-			});
+			let nonfictionBookObject = new cardObject(
+				item.primary_isbn10, // id
+				item.title, // key
+				'books', // category
+				'Nonfiction', // subcategory
+				item.book_image, // artURL
+				`https://www.google.com/search?q=${bookSearch}+goodreads&btnI`, // destURL
+				_.startCase(_.toLower(item.title)), // title
+				'NYT Nonfiction Rank: ' + item.rank, // subtitle1
+				item.author // subtitle2
+			);
 
-			id, url, resultsArray.push(html);
+			resultsArray.push(nonfictionBookObject);
 		});
 
 		return resultsArray;
@@ -278,7 +199,7 @@ function updateNonfictionBookData() {
 
 // Returns an array of HTML templates of top nonfiction books
 function updateNewsData() {
-	return get(
+	return loadData(
 		`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=HfHxWUxYzqeXzAYx2V26or4nU9mOnw8n`
 	).then(responseNews => {
 		let resultsArray = [];
@@ -292,24 +213,27 @@ function updateNewsData() {
 				: (sectionTitle = item.section);
 
 			// If the image is in the article, use it. Otherwise, default to the NYT logo.
-			if (item.multimedia[1] == undefined) {
+			if (item.multimedia[1] === undefined) {
 				url = 'images/times.png';
 			} else {
 				url = item.multimedia[1].url;
 			}
 
-			let html = newsTemplateFn({
-				id: item.short_url,
-				title: item.title,
-				art: url,
-				key: item.title,
-				section: sectionTitle,
-				category: 'news',
-				subcategory: item.section
-			});
+			let newsObject = new cardObject(
+				item.short_url, // id
+				item.title, // key
+				'news', // category
+				item.section, // subcategory
+				url, // artURL
+				item.short_url, // destURL
+				sectionTitle + ':  ' + item.title // title
+				// subtitle1 - should default to null
+				// subtitle2 - should default to null
+			);
+
 			// NOTE: I'm limiting us to 20 articles
 			if (urlCount <= 20) {
-				resultsArray.push(html);
+				resultsArray.push(newsObject);
 			}
 			urlCount++;
 		});
@@ -320,26 +244,26 @@ function updateNewsData() {
 
 // Returns an array of HTML templates of top songs
 function updateDeezerData() {
-	return get(
+	return loadData(
 		`https://my-little-cors-proxy.herokuapp.com/https://api.deezer.com/playlist/2098157264?limit=30`
 	).then(responseMusic => {
 		let resultsArray = [];
 		responseMusic.tracks.data.forEach(item => {
 			let musicSearch = encodeURIComponent(item.artist.name + ' ' + item.title);
-			// Generate the HTML template
-			let html = musicTemplateFn({
-				id: item.position,
-				url: `https://www.google.com/search?q=${musicSearch}+youtube&btnI`,
-				artist: item.artist.name,
-				track: item.title,
-				album: item.album.title,
-				art: item.album.cover_medium,
-				key: item.artist.name,
-				category: 'music',
-				subcategory: 'sub'
-			});
 
-			resultsArray.push(html);
+			let musicObject = new cardObject(
+				item.position, // id
+				item.artist.name, // key
+				'music', // category
+				'sub', // subcategory
+				item.album.cover_medium, // artURL
+				`https://www.google.com/search?q=${musicSearch}+youtube&btnI`, // destURL
+				item.title, // title
+				item.artist.name, // subtitle1 - should default to null
+				item.album.title // subtitle2 - should default to null
+			);
+
+			resultsArray.push(musicObject);
 		});
 
 		return resultsArray;
@@ -348,24 +272,24 @@ function updateDeezerData() {
 
 // Returns an array of HTML templates of top songs
 function updateGamingData() {
-	return get(
+	return loadData(
 		`https://newsapi.org/v2/top-headlines?apiKey=335ef27328fb481aa97916cb3c338206&pageSize=20&sources=ign,polygon`
 	).then(responseGames => {
 		let resultsArray = [];
 		responseGames.articles.forEach(item => {
-			// Generate the HTML template
-			let html = gamingTemplateFn({
-				id: item.source.id,
-				url: item.url,
-				publisher: item.source.name,
-				title: item.title,
-				art: item.urlToImage,
-				key: item.title,
-				category: 'gaming',
-				subcategory: item.source.name
-			});
+			let gamingObject = new cardObject(
+				item.source.id, // id
+				item.title, // key
+				'gaming', // category
+				item.source.name, // subcategory
+				item.urlToImage, // artURL
+				item.url, // destURL
+				item.source.name + ':  ' + item.title // title
+				// subtitle1 - should default to null
+				// subtitle2 - should default to null
+			);
 
-			resultsArray.push(html);
+			resultsArray.push(gamingObject);
 		});
 
 		return resultsArray;
@@ -396,17 +320,21 @@ async function updateAllCards() {
 	);
 
 	/// Hides the loading animation
-	document.querySelector('#loadingAnimation').classList.toggle('hidden');
+	// document.querySelector('#loadingAnimation').classList.toggle('hidden');
 
 	// Randomizes the cards display order
 	cardArray = _.shuffle(cardArray);
 
 	// Appends them in the DOM
-	cardArray.forEach(card => {
-		mainContent.innerHTML += card;
-	});
+	// cardArray.forEach(card => {
+	// 	mainContent.innerHTML += card;
+	// });
 
-	addSignInEventListener();
+	return cardArray;
+
+	// addSignInEventListener();
 }
+
+export default updateAllCards;
 
 updateAllCards();
